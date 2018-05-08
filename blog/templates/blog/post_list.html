@@ -7,8 +7,7 @@
         <div class="date">
             Published Date : {{post.published_date | date:"Y-m-d a g:i"}}
         </div>
-        <h2><a href="">{{ post.title}}</a></h2>
-        <p>{{ post.text|linebreaksbr}}</p>
+        <h2><a href="{% url 'post_detail' pk=post.id %}">{{ post.title}}</a></h2>
     </div>
 
     {% endfor%}
