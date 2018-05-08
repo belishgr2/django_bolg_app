@@ -5,6 +5,11 @@
         {% if post.published_date%}
         <div class="date">
             Published Date : {{post.published_date | date:"Y-m-d a g:i"}}
+            <p>Created Date : {{post.created_date | date:"Y-m-d a g:i"}}</p>
+        </div>
+        {%else%}
+        <div class="date">
+            <p>Created Date : {{post.created_date | date:"Y-m-d a g:i"}}</p>
         </div>
         {% endif%}
         <h1>{{ post.title}}</h1>
