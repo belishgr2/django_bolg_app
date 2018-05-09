@@ -12,6 +12,10 @@
             <p>Created Date : {{post.created_date | date:"Y-m-d a g:i"}}</p>
         </div>
         {% endif%}
+        <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">
+            <span class="glyphicon glyphicon-pencil"></span>
+        </a>
+
         <h1>{{ post.title}}</h1>
         <p>{{ post.text|linebreaksbr}}</p>
     </div>

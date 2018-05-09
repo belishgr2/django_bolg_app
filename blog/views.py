@@ -38,8 +38,11 @@ def post_new_form(request) :
         if form.is_valid():
             # 검증에성공한값들을dict타입으로제공받아서이값을DB에저장하기
             form.cleaned_data
-            post = Post(author=request.user,title=form.cleaned_data['title'],text=form.cleaned_data['text'],published_date=timezone.now())
-            post.save()
+            #방법 1 POST 객체 생성 save() 호출
+            # post = Post(author=request.user,title=form.cleaned_data['title'],text=form.cleaned_data['text'],published_date=timezone.now())
+            # post.save()
+            #방법 2
+            post = Post.objects.create(author=request.user,title=form.cleaned_data['title'],text=form.cleaned_data['text'],published_date=timezone.now())
             return redirect('post_detail',pk=post.pk)
         else:
             form.errors
@@ -47,3 +50,17 @@ def post_new_form(request) :
         form = PostForm()
     return render(request,'blog/post_form.html',{'form':form})
 
+
+def post_edit(request,pk):
+    post = get_object_or_404(Post,pk=pk)
+    if request.method == "POST" :
+        form = PostModelForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author=request.user
+            post.published_date=timezone.now()
+            post.save()
+            return redirect("post_detail",pk=post.pk)
+    else :
+        form = PostModelForm(instance=post)
+    return render(request,"blog/post_edit.html",{"form" : form})
